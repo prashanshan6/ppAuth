@@ -10,7 +10,6 @@ bcrypt = require("bcryptjs");
 
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
-// router.use(morgan("tiny"));
 
 const { userModel } = require("../models/user");
 const { adminModel, validate } = require("../models/admin");
@@ -158,7 +157,7 @@ router.post("/setPassword/:id", tempAdminAuth, async (req, res) => {
 
         const result = await userModel.findOneAndUpdate(
             { _id: id },
-            { $set: { password: hashed,  status: 1 } }
+            { $set: { password: hashed, status: 1 } }
         );
 
         if (result) {
@@ -210,7 +209,7 @@ router.get("/users", auth, async (req, res) => {
         user_details = [];
         users.forEach(element => {
             // return valid active accounts(not new accounts, not forget password accounts)
-            if(element.status==1){
+            if (element.status == 1) {
                 user_details.push(
                     _.pick(element, [
                         "_id",
@@ -223,7 +222,6 @@ router.get("/users", auth, async (req, res) => {
                     ])
                 );
             }
-            
         });
         return res.json(user_details);
 

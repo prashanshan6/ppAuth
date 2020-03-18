@@ -13,8 +13,10 @@ const app = express();
 app.use("/", express.static(__dirname + "/frontend"));
 
 app.listen(8080);
-
-app.use(morgan("tiny"));
+if ((process.env.mode = "developement")) {
+    app.use(morgan("tiny"));
+    console.log("in dev mode");
+} else console.log("in production mode");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

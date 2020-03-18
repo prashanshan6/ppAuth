@@ -136,11 +136,10 @@
 
                 if (classes == "table-danger") {
                     $(class_name).addClass("table-success");
-                    // $(".isActive", class_name).html("false");
+                    $(".isActive", class_name).text("true");
                 } else {
                     $(class_name).addClass("table-danger");
-                    // $(".isActive", class_name).html("true");
-                    // console.log($(".isActive", class_name).html);
+                    $(".isActive", class_name).text("false");
                 }
 
                 $(class_name).removeClass(classes);

@@ -7,7 +7,6 @@ crypto = require("crypto");
 
 router.use(bodyParser.urlencoded({ extended: false }));
 router.use(bodyParser.json());
-router.use(morgan("tiny"));
 
 const { userModel, validate } = require("../models/user");
 const { adminModel } = require("../models/admin");
