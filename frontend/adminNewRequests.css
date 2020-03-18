@@ -1,0 +1,9 @@
+.row {
+    margin: 2%;
+    padding: 2%;
+}
+
+.users,
+.newRequests {
+    text-align: center;
+}

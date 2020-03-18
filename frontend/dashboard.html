@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link rel="stylesheet" href="./adminDashboard.css" />
+    </head>
+    <body>
+        <!-- link -->
+        <link rel="stylesheet" href="./bootstrap/bootstrap.min.css" />
+
+        <!-- <script src="./bootstrap/jquery-3.4.1.slim.min.js"></script> -->
+        <script src="./scripts/jquery-3.4.1.min.js"></script>
+        <script src="./bootstrap/popper.min.js"></script>
+        <script src="./bootstrap/bootstrap.min.js"></script>
+
+        <!--  -->
+        <!-- nav -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">ppAuth</a>
+            <button
+                class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item ">
+                        <a class="nav-link" id="home" href="#"
+                            >Home <span class="sr-only">(current)</span></a
+                        >
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" id="users" href="#"
+                            >Users <span class="sr-only">(current)</span></a
+                        >
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" id="newReq" href="#"
+                            >New Requests
+                            <span class="sr-only">(current)</span></a
+                        >
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Password Reset Requests</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" id="users" href="./contact.html"
+                            >Contact Us
+                            <span class="sr-only">(current)</span></a
+                        >
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" id="users" href="./faq.html"
+                            >FAQ <span class="sr-only">(current)</span></a
+                        >
+                    </li>
+                </ul>
+                <span class="nav-item ">
+                    <a class="btn btn-primary" href="#" onclick="logout()"
+                        >Logout
+                    </a>
+                </span>
+            </div>
+        </nav>
+        <!-- nav -->
+
+        <div class="clickContent">
+            <h1>Welcome!</h1>
+        </div>
+
+        <script>
+            // display welcome
+            $(document).ready(function() {
+                $(".clickContent").load("./banner.html");
+            });
+
+            // navbar active
+            $(document).on("click", "ul li", function() {
+                $(this)
+                    .addClass("active")
+                    .siblings()
+                    .removeClass("active");
+            });
+            // choose html to display on div
+            $(document).ready(function() {
+                $("#home").click(function() {
+                    $(".clickContent").load("./banner.html");
+                });
+                $("#newReq").click(function() {
+                    $(".clickContent").load("./adminNewRequest.html");
+                });
+                $("#users").click(function() {
+                    $(".clickContent").load("./adminToggleUsers.html");
+                });
+            });
+            function logout() {
+                localStorage.setItem("x-admin-token", null);
+                localStorage.setItem("adminDetails", null);
+                alert("logged out");
+                window.location.href = "/";
+                return;
+            }
+        </script>
+    </body>
+</html>

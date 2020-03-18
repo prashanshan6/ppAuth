@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Admin Registration`</title>
+        <link rel="stylesheet" href="./style.css" />
+        <link rel="stylesheet" href="./sky.css" />
+    </head>
+    <body>
+        <link rel="stylesheet" href="style.css" />
+        <!-- link -->
+        <link rel="stylesheet" href="./bootstrap/bootstrap.min.css" />
+
+        <!-- <script src="./bootstrap/jquery-3.4.1.slim.min.js"></script> -->
+        <script src="./scripts/jquery-3.4.1.min.js"></script>
+
+        <script src="./bootstrap/popper.min.js"></script>
+        <script src="./bootstrap/bootstrap.min.js"></script>
+
+        <!--  -->
+        <div class="header"></div>
+        <!-- univ nav bar header -->
+        <script>
+            $(function() {
+                $(".header").load("./universalNav.html");
+            });
+            console.log(1);
+        </script>
+        <!--  -->
+        <div class="loginBox">
+            <h2>Admin Registration</h2>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="name"
+                    aria-describedby="emailHelp"
+                    placeholder="Enter Name"
+                />
+            </div>
+
+            <div class="form-group">
+                <label for="organisation">Organisation</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="organisation"
+                    aria-describedby="emailHelp"
+                    placeholder="Organisation"
+                />
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    aria-describedby="emailHelp"
+                    placeholder="Enter email"
+                />
+                <small id="emailHelp" class="form-text"
+                    >We'll never share your email with anyone else.</small
+                >
+            </div>
+            <div class="form-group">
+                <label for="organisation">Password</label>
+                <input
+                    type="password"
+                    class="form-control"
+                    id="password"
+                    aria-describedby="emailHelp"
+                    placeholder="Password"
+                />
+            </div>
+            <div class="form-group">
+                <label for="organisation">Confirm Password</label>
+                <input
+                    type="password"
+                    class="form-control"
+                    id="confirm"
+                    aria-describedby="emailHelp"
+                    placeholder="Confirm Password"
+                />
+            </div>
+
+            <button type="submit" onclick="register()" class="btn btn-primary">
+                Register
+            </button>
+            <script src="./scripts/sky.js"></script>
+        </div>
+
+        <script>
+            function register() {
+                var name = document.getElementById("name").value;
+                var organisation = document.getElementById("organisation")
+                    .value;
+                var email = document.getElementById("email").value;
+                var password = document.getElementById("password").value;
+                var confirm = document.getElementById("confirm").value;
+                if (password == confirm) {
+                    var payload = {
+                        name: name,
+                        email: email,
+                        password: password,
+                        organisation: organisation
+                    };
+
+                    var dataJson = JSON.stringify(payload);
+
+                    $.ajax({
+                        type: "POST",
+                        url: "http://localhost:3000/api/admin/register",
+                        data: dataJson,
+
+                        success: function(data) {
+                            // console.log(data);
+
+                            if (data.error == null) {
+                                alert("account created successfully");
+                                window.location.href = "./adminLogin.html";
+                            }
+                        },
+                        error: function(e) {
+                            console.log(
+                                e.responseText,
+                                e.responseJSON,
+                                e.status,
+                                e.statusText
+                            );
+                        },
+                        // complete: function(jqxhr, txt_status) {
+                        //     console.log(txt_status, jqxhr);
+                        // }
+
+                        dataType: "json",
+                        contentType: "application/json"
+                    });
+                } else {
+                    alert("passwords didn't match");
+                }
+            }
+        </script>
+    </body>
+</html>

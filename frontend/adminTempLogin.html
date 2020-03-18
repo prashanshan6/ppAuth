@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Temp Admin Login</title>
+        <link rel="stylesheet" href="./style.css" />
+    </head>
+    <body>
+        <!-- link -->
+        <link rel="stylesheet" href="./bootstrap/bootstrap.min.css" />
+
+        <!-- <script src="./bootstrap/jquery-3.4.1.slim.min.js"></script> -->
+        <script src="./scripts/jquery-3.4.1.min.js"></script>
+
+        <script src="./bootstrap/popper.min.js"></script>
+        <script src="./bootstrap/bootstrap.min.js"></script>
+
+        <!--  -->
+        <div class="header"></div>
+        <!-- univ nav bar header -->
+        <script>
+            $(function() {
+                $(".header").load("./universalNav.html");
+            });
+        </script>
+        <!--  -->
+        <div class="loginBox">
+            <h2>Temp Admin Login</h2>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    aria-describedby="emailHelp"
+                    placeholder="Enter email"
+                />
+                <small id="emailHelp" class="form-text"
+                    >We'll never share your email with anyone else.</small
+                >
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input
+                    type="password"
+                    class="form-control"
+                    id="password"
+                    placeholder="Password"
+                />
+            </div>
+
+            <button
+                type="submit"
+                onclick="adminTempLogin()"
+                class="btn btn-primary"
+            >
+                Submit
+            </button>
+        </div>
+
+        <script>
+            function adminTempLogin() {
+                var email = document.getElementById("email").value;
+                var password = document.getElementById("password").value;
+
+                var payload = {
+                    email: email,
+                    password: password
+                };
+
+                var dataJson = JSON.stringify(payload);
+
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost:3000/api/admin/tempLogin",
+                    data: dataJson,
+
+                    success: function(data) {
+                        // alert();
+                        localStorage.setItem(
+                            "adminDetails",
+                            JSON.stringify(data)
+                        );
+
+                        localStorage.setItem("x-tempAdmin-token", data.token);
+                        localStorage.setItem("reset_userId", data.user);
+
+                        window.location.href = "./tempDashboard.html";
+                    },
+                    error: function(e) {
+                        alert(e.responseText);
+                        console.log(
+                            e.responseText,
+                            e.responseJSON,
+                            e.status,
+                            e.statusText
+                        );
+                    },
+                    // complete: function(jqxhr, txt_status) {
+                    //     console.log(txt_status, jqxhr);
+                    // }
+
+                    dataType: "json",
+                    contentType: "application/json"
+                });
+            }
+        </script>
+    </body>
+    <script src="./scripts/sky.js"></script>
+</html>

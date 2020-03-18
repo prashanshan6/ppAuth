@@ -1,0 +1,14 @@
+.clickContent {
+    position: relative;
+    top: 100px;
+    border: 1px solid gray;
+    margin: 0 auto;
+    padding: 5%;
+    width: 80%;
+}
+
+.navbar {
+    position: absolute;
+    width: 100%;
+    z-index: 1000;
+}

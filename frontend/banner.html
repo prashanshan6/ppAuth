@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <script>
+        // display welcome
+        $(document).ready(function(){
+            if(localStorage.getItem("adminDetails") != null)
+            {
+                $(".clickContent").append('<h1>Welcome ' + JSON.parse(localStorage.getItem("adminDetails")).name + '! </h1>');
+                $(".clickContent").append('<h2>organisation : ' + JSON.parse(localStorage.getItem("adminDetails")).organisation + ' </h2>');
+                $(".clickContent").append('<h2>Logged In </h2>');
+                // console.log(localStorage.getItem("userDetails"));
+            }
+            else{
+                $(".clickContent").append('<h1>Welcome ' + JSON.parse(localStorage.getItem("userDetails")).name + ' </h1>');
+                $(".clickContent").append('<h2>organisation : ' + JSON.parse(localStorage.getItem("userDetails")).organisation + ' </h2>');
+                $(".clickContent").append('<h2>Logged In </h2>');
+                // console.log(localStorage.getItem("userDetails"));
+            }
+        });
+    </script>
+</body>
+</html>

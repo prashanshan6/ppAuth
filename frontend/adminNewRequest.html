@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="./adminNewRequests.css" />
+        <style>
+            table {
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="newRequests">
+            <h3>New Users</h3>
+        </div>
+
+        <script>
+            $(document).ready(function() {
+                $.ajax({
+                    url: "http://localhost:3000/api/admin/newRequests",
+                    type: "GET",
+                    dataType: "json", // added data type
+                    beforeSend: function(xhr) {
+                        // set header if JWT is set
+                        if (localStorage.getItem("x-admin-token")) {
+                            xhr.setRequestHeader(
+                                "x-admin-token",
+                                localStorage.getItem("x-admin-token")
+                            );
+                        }
+                    },
+                    success: function(data) {
+                        // console.log(data);
+
+                        var tableCode =
+                            '<div><table class="table table-striped" border="1"><thead class="thead-dark"><tr>                <th scope="col">No</th>               <th scope="col">Name</th>            <th scope="col">Email</th>             <th scope="col">Organisation</th>           <th scope="col">Active</th><th scope="col">Response</th>           </tr>         </thead></table></div>';
+                        // console.log(tableCode);
+                        var myNewDiv;
+                        $(".newRequests").append(tableCode);
+                        if (data.length == 0) {
+                            myNewDiv =
+                                "<tr><th colspan=6>No Entries found</th></tr>";
+                            $(".table").append(myNewDiv);
+                        } else {
+                            data.forEach((element, index) => {
+                                myNewDiv =
+                                    '<tr><th scope="row">' +
+                                    (index + 1) +
+                                    '<th scope="col">' +
+                                    element.name +
+                                    '</th><th scope="col">' +
+                                    element.email +
+                                    '</th><th scope="col">' +
+                                    element.organisation +
+                                    '</th><th scope="col">' +
+                                    element.isActive +
+                                    '</th><th scope="col"><button type="submit" onclick=genPassword(\'' +
+                                    element._id +
+                                    '\') class="btn btn-outline-primary responseBtnCol"> Accept </button> / <button type="submit" class="btn btn-outline-danger"> Reject </button></th></tr>';
+                                $(".table").append(myNewDiv);
+                            });
+                        }
+
+                        // data.forEach(element => {
+                        //     myNewDiv +=
+                        //         '<div class="row border border-primary"><div class="col-sm">' +
+                        //         element.name +
+                        //         '</div><div class="col-sm">' +
+                        //         element.email +
+                        //         '</div><div class="col-sm">' +
+                        //         element.organisation +
+                        //         '</div> <div class="col-sm">' +
+                        //         element.isActive +
+                        //         '</div> <div class="col-sm"><button type="submit" onclick=genPassword(\'' +
+                        //         element._id +
+                        //         '\') class="btn btn-outline-primary"> Accept </button></div> <div class="col-sm"><button type="submit" class="btn btn-outline-danger"> Reject </button></div>  </div>';
+                        //     $(".newRequests").append(myNewDiv);
+                        // });
+                    },
+                    error: function(e) {
+                        console.log(
+                            e.responseText,
+                            e.responseJSON,
+                            e.status,
+                            e.statusText
+                        );
+                    }
+                });
+            });
+
+            function genPassword(id) {
+                $.ajax({
+                    url: "http://localhost:3000/api/admin/newRequests/" + id,
+                    type: "GET",
+                    dataType: "json", // added data type
+                    beforeSend: function(xhr) {
+                        // set header if JWT is set
+                        if (localStorage.getItem("x-admin-token")) {
+                            xhr.setRequestHeader(
+                                "x-admin-token",
+                                localStorage.getItem("x-admin-token")
+                            );
+                        }
+                    },
+                    success: function(data) {
+                        // console.log(data);
+                        alert("otp = " + data.password);
+                    },
+                    error: function(e) {
+                        console.log(
+                            e.responseText,
+                            e.responseJSON,
+                            e.status,
+                            e.statusText
+                        );
+                    }
+                });
+            }
+        </script>
+    </body>
+</html>

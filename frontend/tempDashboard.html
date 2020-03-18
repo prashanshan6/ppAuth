@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link rel="stylesheet" href="./adminDashboard.css" />
+    </head>
+    <body>
+        <!-- link -->
+        <link rel="stylesheet" href="./bootstrap/bootstrap.min.css" />
+
+        <!-- <script src="./bootstrap/jquery-3.4.1.slim.min.js"></script> -->
+        <script src="./scripts/jquery-3.4.1.min.js"></script>
+        <script src="./bootstrap/popper.min.js"></script>
+        <script src="./bootstrap/bootstrap.min.js"></script>
+
+        <!--  -->
+        <!-- nav -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button
+                class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item ">
+                        <a class="nav-link" id="newReq" href="#"
+                            >New Requests
+                            <span class="sr-only">(current)</span></a
+                        >
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Password Reset Requests</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a
+                            class="nav-link dropdown-toggle"
+                            href="#"
+                            id="navbarDropdown"
+                            role="button"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                        >
+                            Dropdown
+                        </a>
+                        <div
+                            class="dropdown-menu"
+                            aria-labelledby="navbarDropdown"
+                        >
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#"
+                                >Something else here</a
+                            >
+                        </div>
+                    </li>
+                </ul>
+                <span class="nav-item ">
+                    <a class="btn btn-primary" href="#" onclick="logout()"
+                        >Logout
+                    </a>
+                </span>
+            </div>
+        </nav>
+        <!-- nav -->
+
+        <div class="clickContent">
+            <div class="newPassword">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">New Password</label>
+                    <input
+                        type="password"
+                        class="form-control"
+                        id="password"
+                        aria-describedby="emailHelp"
+                        placeholder="Password"
+                    />
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Confirm Password</label>
+                    <input
+                        type="password"
+                        class="form-control"
+                        id="confirm"
+                        placeholder="Confirm Password"
+                    />
+                </div>
+
+                <button
+                    type="submit"
+                    onclick="changePassword()"
+                    class="btn btn-primary"
+                >
+                    Submit
+                </button>
+            </div>
+        </div>
+
+        <script>
+            function changePassword() {
+                const id = localStorage.getItem("reset_userId");
+
+                const pwd = document.getElementById("password").value;
+                const confirm = document.getElementById("confirm").value;
+                let password;
+                if (pwd == confirm) {
+                    password = confirm;
+                } else {
+                    // console.log(pwd, confirm);
+                    alert("passwords didn't match");
+                    // console.log("passwords didn't match");
+                    return;
+                }
+
+                const dataJson = JSON.stringify({ password: password });
+                // alert();
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost:3000/api/admin/setPassword/" + id,
+                    data: dataJson,
+                    beforeSend: function(xhr) {
+                        // set header if JWT is set
+                        // console.log(localStorage.getItem("x-tempAdmin-token"));
+                        // alert();
+                        if (localStorage.getItem("x-tempAdmin-token")) {
+                            xhr.setRequestHeader(
+                                "x-tempAdmin-token",
+                                localStorage.getItem("x-tempAdmin-token")
+                            );
+                        }
+                    },
+
+                    success: function(data) {
+                        // console.log(data);
+                        localStorage.setItem("clientKey", data.clientKey);
+                        // console.log(localStorage.getItem("clientKey"));
+
+                        alert("client key is set");
+                        logout();
+                        window.location.href = "./userLogin.html";
+                    },
+                    error: function(e) {
+                        alert(e.responseText);
+                        console.log(
+                            e.responseText,
+                            e.responseJSON,
+                            e.status,
+                            e.statusText
+                        );
+                    },
+                    // complete: function(jqxhr, txt_status) {
+                    //     console.log(txt_status, jqxhr);
+                    // }
+
+                    dataType: "json",
+                    contentType: "application/json"
+                });
+            }
+            // $(document).on("click", "ul li", function() {
+            //     $(this)
+            //         .addClass("active")
+            //         .siblings()
+            //         .removeClass("active");
+            // });
+            // $(document).ready(function() {
+            //     $("#newReq").click(function() {
+            //         $(".clickContent").load("./adminNewRequest.html");
+            //     });
+            // });
+            function logout() {
+                localStorage.setItem("x-tempAdmin-token", null);
+                localStorage.setItem("reset_userId", null);
+
+                alert("logged out");
+                window.location.href = "/";
+                return;
+            }
+        </script>
+    </body>
+</html>
