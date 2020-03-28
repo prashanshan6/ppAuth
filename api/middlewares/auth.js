@@ -6,6 +6,9 @@ function auth(req, res, next) {
         return res.status(401).send("access denied, token not provided");
     try {
         const user = jwt.verify(token, process.env.secret);
+
+        if (!user)
+            return res.status(400).json({ error: "invalid/expired token" });
         req.admin = user;
         // console.log(req.admin);
 
