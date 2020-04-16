@@ -42,28 +42,31 @@ router.post("/register", async (req, res) => {
         // console.log(admin);
     } catch (err) {
         console.log("error : ", err);
+        return res.status(400).json({ error: err });
     }
 });
 // login
 router.post("/login", async (req, res) => {
-    const admin = await adminModel.findOne({ email: req.body.email });
-    if (!admin) return res.status(500).send("Email doesn't exist");
+    try {
+        const admin = await adminModel.findOne({ email: req.body.email });
+        if (!admin) return res.status(500).send("Email doesn't exist");
 
-    const result = bcrypt.compare(req.body.password, admin.password);
-    const token = admin.generateAuthToken();
-    // console.log(token);
-    const temp = _.pick(admin, ["_id", "name", "email", "organisation"]);
-    temp.token = token;
-    return res.header("x-admin-token", token).send(temp);
+        const result = bcrypt.compare(req.body.password, admin.password);
+        const token = admin.generateAuthToken();
+        // console.log(token);
+        const temp = _.pick(admin, ["_id", "name", "email", "organisation"]);
+        temp.token = token;
+        return res.header("x-admin-token", token).send(temp);
+    } catch (error) {}
 });
 router.get("/newRequests", auth, async (req, res) => {
     try {
         const users = await userModel.find({
             status: 0,
-            organisation: req.admin.organisation
+            organisation: req.admin.organisation,
         });
         user_details = [];
-        users.forEach(element => {
+        users.forEach((element) => {
             user_details.push(
                 _.pick(element, [
                     "_id",
@@ -72,7 +75,7 @@ router.get("/newRequests", auth, async (req, res) => {
                     "email",
                     "organisation",
                     "status",
-                    "isActive"
+                    "isActive",
                 ])
             );
         });
@@ -83,6 +86,7 @@ router.get("/newRequests", auth, async (req, res) => {
         // console.log(admin);
     } catch (err) {
         console.log("error : ", err);
+        return res.status(400).json({ error: err });
     }
 });
 
@@ -100,7 +104,7 @@ router.get("/newRequests", auth, async (req, res) => {
 router.get("/newRequests/:id", auth, async (req, res) => {
     try {
         const result = await adminTempLoginModel.find({
-            email: req.admin.email
+            email: req.admin.email,
         });
         const otp = generateOTP(4);
         if (result.length) {
@@ -115,33 +119,41 @@ router.get("/newRequests/:id", auth, async (req, res) => {
             const tempAdmin = new adminTempLoginModel({
                 email: req.admin.email,
                 password: otp,
-                user: req.params.id
+                user: req.params.id,
             });
             const result = await tempAdmin.save();
             return res.json(result);
         }
     } catch (err) {
         console.log("error : ", err);
+        return res.status(400).json({ error: err });
     }
 });
 // temp login
 router.post("/tempLogin", async (req, res) => {
-    const admin = await adminTempLoginModel.findOne({ email: req.body.email });
-    if (!admin) return res.status(500).send("Email doesn't exist");
-    // console.log(admin.user);
-    if (req.body.password == admin.password) {
-        const token = admin.generateAuthToken();
-        console.log(token);
-        console.log(1111);
-        const temp = _.pick(admin, ["_id"]);
-        temp.otp = req.body.password;
-        temp.token = token;
-        temp.user = admin.user;
+    try {
+        const admin = await adminTempLoginModel.findOne({
+            email: req.body.email,
+        });
+        if (!admin) return res.status(500).send("Email doesn't exist");
+        // console.log(admin.user);
+        if (req.body.password == admin.password) {
+            const token = admin.generateAuthToken();
+            console.log(token);
+            console.log(1111);
+            const temp = _.pick(admin, ["_id"]);
+            temp.otp = req.body.password;
+            temp.token = token;
+            temp.user = admin.user;
 
-        // console.log(temp);
+            // console.log(temp);
 
-        return res.header("x-admin-token", token).send(temp);
-    } else return res.status(403).send("invalid temp admin details");
+            return res.header("x-admin-token", token).send(temp);
+        } else return res.status(403).send("invalid temp admin details");
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json({ error: err });
+    }
 });
 // temp login click allow , generate client private key and set password with key
 router.post("/setPassword/:id", tempAdminAuth, async (req, res) => {
@@ -157,7 +169,7 @@ router.post("/setPassword/:id", tempAdminAuth, async (req, res) => {
 
         const result = await userModel.findOneAndUpdate(
             { _id: id },
-            { $set: { password: hashed, status: 1 } }
+            { $set: { password: hashed, status: 2 } }
         );
 
         if (result) {
@@ -165,11 +177,12 @@ router.post("/setPassword/:id", tempAdminAuth, async (req, res) => {
             await adminTempLoginModel.deleteOne({ user: id });
             return res.json({
                 status: "password is set",
-                clientKey: clientKey
+                clientKey: clientKey,
             });
         } else return res.status(403).send("password is not set");
     } catch (error) {
         console.log(error);
+        return res.status(400).json({ error: error });
     }
 });
 
@@ -178,13 +191,14 @@ router.get("/aprove/:id", auth, async (req, res) => {
         const userId = req.params.id;
 
         const user = await userModel.updateOne(
-            { _id: userId },
+            { _id: userId, organisation: req.admin.organisation },
             { $set: { isActive: true } }
         );
 
         return res.json({ id: userId, status: "active" });
     } catch (err) {
         console.log("id not approved ", err);
+        return res.status(400).json({ error: err });
     }
 });
 router.get("/reject/:id", auth, async (req, res) => {
@@ -192,36 +206,38 @@ router.get("/reject/:id", auth, async (req, res) => {
         const userId = req.params.id;
 
         const user = await userModel.updateOne(
-            { _id: userId },
+            { _id: userId, organisation: req.admin.organisation },
             { $set: { isActive: false } }
         );
         return res.json({ id: userId, status: "blocked" });
     } catch (err) {
         console.log("id not blocked ", err);
+        return res.status(400).json({ error: err });
     }
 });
 
 router.get("/users", auth, async (req, res) => {
     try {
         const users = await userModel.find({
-            organisation: req.admin.organisation
+            $or: [
+                { organisation: req.admin.organisation, status: 2 },
+                { organisation: req.admin.organisation, isActive: true },
+            ],
         });
         user_details = [];
-        users.forEach(element => {
+        users.forEach((element) => {
             // return valid active accounts(not new accounts, not forget password accounts)
-            if (element.status == 1) {
-                user_details.push(
-                    _.pick(element, [
-                        "_id",
-                        "name",
-                        "regno",
-                        "email",
-                        "organisation",
-                        "isActive",
-                        "status"
-                    ])
-                );
-            }
+            user_details.push(
+                _.pick(element, [
+                    "_id",
+                    "name",
+                    "regno",
+                    "email",
+                    "organisation",
+                    "isActive",
+                    "status",
+                ])
+            );
         });
         return res.json(user_details);
 
@@ -231,4 +247,85 @@ router.get("/users", auth, async (req, res) => {
     }
 });
 
+//
+router.get("/forgetPasswordRequests", auth, async (req, res) => {
+    try {
+        const users = await userModel.find({
+            status: 1,
+            organisation: req.admin.organisation,
+        });
+        user_details = [];
+        users.forEach((element) => {
+            user_details.push(
+                _.pick(element, [
+                    "_id",
+                    "name",
+                    "regno",
+                    "email",
+                    "organisation",
+                    "status",
+                    "isActive",
+                ])
+            );
+        });
+        console.log(user_details);
+
+        return res.json(user_details);
+    } catch (err) {
+        console.log("error : ", err);
+        return res.status(400).json({ error: err });
+    }
+});
+router.get("/forgetPasswordRequests/accept/:id", auth, async (req, res) => {
+    console.log("sdad");
+    const id = req.params.id;
+    try {
+        const user = await userModel.findOne({
+            _id: id,
+            organisation: req.admin.organisation,
+        });
+        let result;
+        if (user) {
+            user.status = 0;
+            user.isActive = false;
+            result = await user.save();
+        } else {
+            return res
+                .status(400)
+                .json({ error: "given details doesn't match with database" });
+        }
+        return res.json({ status: "password request is accepted" });
+    } catch (err) {
+        console.log("error : ", err);
+        // return res.status(400).json({ error: "request isn't completed" });
+        return res.status(400).json({ error: err });
+    }
+});
+router.get("/forgetPasswordRequests/reject/:id", auth, async (req, res) => {
+    const id = req.params.id;
+    try {
+        const user = await userModel.findOne({
+            _id: id,
+            organisation: req.admin.organisation,
+        });
+        let result;
+        if (user.isActive == true) {
+            user.status = 2;
+            result = await user.save();
+        } else if (user.isActive == false) {
+            user.status = -1;
+            result = await user.save();
+        } else {
+            return res
+                .status(400)
+                .json({ error: "given details doesn't match with database" });
+        }
+        return res.json({ status: "password request is rejected" });
+    } catch (err) {
+        console.log("error : ", err);
+        return res.status(400).json({ error: err });
+    }
+});
+
+//
 module.exports = router;

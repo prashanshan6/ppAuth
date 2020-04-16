@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
+        <title>Admin Dashboard</title>
         <link rel="stylesheet" href="./adminDashboard.css" />
     </head>
     <body>
@@ -33,38 +33,40 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item ">
+                    <li class="nav-item">
                         <a class="nav-link" id="home" href="#"
                             >Home <span class="sr-only">(current)</span></a
                         >
                     </li>
-                    <li class="nav-item ">
+                    <li class="nav-item">
                         <a class="nav-link" id="users" href="#"
                             >Users <span class="sr-only">(current)</span></a
                         >
                     </li>
-                    <li class="nav-item ">
+                    <li class="nav-item">
                         <a class="nav-link" id="newReq" href="#"
                             >New Requests
                             <span class="sr-only">(current)</span></a
                         >
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Password Reset Requests</a>
+                        <a class="nav-link" href="#" id="passwordReq"
+                            >Password Reset Requests</a
+                        >
                     </li>
-                    <li class="nav-item ">
+                    <li class="nav-item">
                         <a class="nav-link" id="users" href="./contact.html"
                             >Contact Us
                             <span class="sr-only">(current)</span></a
                         >
                     </li>
-                    <li class="nav-item ">
+                    <li class="nav-item">
                         <a class="nav-link" id="users" href="./faq.html"
                             >FAQ <span class="sr-only">(current)</span></a
                         >
                     </li>
                 </ul>
-                <span class="nav-item ">
+                <span class="nav-item">
                     <a class="btn btn-primary" href="#" onclick="logout()"
                         >Logout
                     </a>
@@ -79,26 +81,26 @@
 
         <script>
             // display welcome
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $(".clickContent").load("./banner.html");
             });
 
             // navbar active
-            $(document).on("click", "ul li", function() {
-                $(this)
-                    .addClass("active")
-                    .siblings()
-                    .removeClass("active");
+            $(document).on("click", "ul li", function () {
+                $(this).addClass("active").siblings().removeClass("active");
             });
             // choose html to display on div
-            $(document).ready(function() {
-                $("#home").click(function() {
+            $(document).ready(function () {
+                $("#home").click(function () {
                     $(".clickContent").load("./banner.html");
                 });
-                $("#newReq").click(function() {
+                $("#newReq").click(function () {
                     $(".clickContent").load("./adminNewRequest.html");
                 });
-                $("#users").click(function() {
+                $("#passwordReq").click(function () {
+                    $(".clickContent").load("./userPasswordResetRequests.html");
+                });
+                $("#users").click(function () {
                     $(".clickContent").load("./adminToggleUsers.html");
                 });
             });

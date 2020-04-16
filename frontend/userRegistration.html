@@ -20,7 +20,7 @@
         <div class="header"></div>
         <!-- univ nav bar header -->
         <script>
-            $(function() {
+            $(function () {
                 $(".header").load("./universalNav.html");
             });
         </script>
@@ -89,7 +89,7 @@
                     email: email,
                     // password: password,
                     regno: regno,
-                    organisation: organisation
+                    organisation: organisation,
                 };
 
                 var dataJson = JSON.stringify(payload);
@@ -99,17 +99,19 @@
                     url: "http://localhost:3000/api/user/register",
                     data: dataJson,
 
-                    success: function(data) {
+                    success: function (data) {
                         if (data.error == null) {
                             alert("account created successfully");
                             window.location.href = "./userLogin.html";
                         } else alert(data.error);
                     },
-                    error: function(e) {
-                        alert(e.responseJSON.error);
+                    error: function (e) {
+                        alert(
+                            e.responseJSON.error.message || e.responseJSON.error
+                        );
                         console.log(
                             e.responseText,
-                            e.responseJSON,
+                            e.responseJSON.error,
                             e.status,
                             e.statusText
                         );
@@ -119,9 +121,35 @@
                     // }
 
                     dataType: "json",
-                    contentType: "application/json"
+                    contentType: "application/json",
                 });
             }
+            a = {
+                error: {
+                    errors: {
+                        name: {
+                            message:
+                                "Path `name` (`Raj`) is shorter than the minimum allowed length (4).",
+                            name: "ValidatorError",
+                            properties: {
+                                message:
+                                    "Path `name` (`Raj`) is shorter than the minimum allowed length (4).",
+                                type: "minlength",
+                                minlength: 4,
+                                path: "name",
+                                value: "Raj",
+                            },
+                            kind: "minlength",
+                            path: "name",
+                            value: "Raj",
+                        },
+                    },
+                    _message: "user validation failed",
+                    message:
+                        "user validation failed: name: Path `name` (`Raj`) is shorter than the minimum allowed length (4).",
+                    name: "ValidationError",
+                },
+            };
         </script>
         <script src="./scripts/sky.js"></script>
     </body>

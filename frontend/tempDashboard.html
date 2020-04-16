@@ -3,8 +3,16 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
+        <title>Set User password</title>
         <link rel="stylesheet" href="./adminDashboard.css" />
+        <style>
+            body {
+                background-color: #ff7700;
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900'%3E%3Cpolygon fill='%23cc0000' points='957 450 539 900 1396 900'/%3E%3Cpolygon fill='%23aa0000' points='957 450 872.9 900 1396 900'/%3E%3Cpolygon fill='%23d6002b' points='-60 900 398 662 816 900'/%3E%3Cpolygon fill='%23b10022' points='337 900 398 662 816 900'/%3E%3Cpolygon fill='%23d9004b' points='1203 546 1552 900 876 900'/%3E%3Cpolygon fill='%23b2003d' points='1203 546 1552 900 1162 900'/%3E%3Cpolygon fill='%23d3006c' points='641 695 886 900 367 900'/%3E%3Cpolygon fill='%23ac0057' points='587 900 641 695 886 900'/%3E%3Cpolygon fill='%23c4008c' points='1710 900 1401 632 1096 900'/%3E%3Cpolygon fill='%239e0071' points='1710 900 1401 632 1365 900'/%3E%3Cpolygon fill='%23aa00aa' points='1210 900 971 687 725 900'/%3E%3Cpolygon fill='%23880088' points='943 900 1210 900 971 687'/%3E%3C/svg%3E");
+                background-attachment: fixed;
+                background-size: cover;
+            }
+        </style>
     </head>
     <body>
         <!-- link -->
@@ -18,7 +26,7 @@
         <!--  -->
         <!-- nav -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">Navbar</a>
+            <a class="navbar-brand" href="#">ppAuth</a>
             <button
                 class="navbar-toggler"
                 type="button"
@@ -33,41 +41,19 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item ">
+                    <li class="nav-item">
                         <a class="nav-link" id="newReq" href="#"
-                            >New Requests
-                            <span class="sr-only">(current)</span></a
+                            >Help <span class="sr-only">(current)</span></a
                         >
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Password Reset Requests</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a
-                            class="nav-link dropdown-toggle"
-                            href="#"
-                            id="navbarDropdown"
-                            role="button"
-                            data-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false"
+                        <a class="nav-link" id="newReq" href="#"
+                            >Contact us
+                            <span class="sr-only">(current)</span></a
                         >
-                            Dropdown
-                        </a>
-                        <div
-                            class="dropdown-menu"
-                            aria-labelledby="navbarDropdown"
-                        >
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#"
-                                >Something else here</a
-                            >
-                        </div>
                     </li>
                 </ul>
-                <span class="nav-item ">
+                <span class="nav-item">
                     <a class="btn btn-primary" href="#" onclick="logout()"
                         >Logout
                     </a>
@@ -130,7 +116,7 @@
                     type: "POST",
                     url: "http://localhost:3000/api/admin/setPassword/" + id,
                     data: dataJson,
-                    beforeSend: function(xhr) {
+                    beforeSend: function (xhr) {
                         // set header if JWT is set
                         // console.log(localStorage.getItem("x-tempAdmin-token"));
                         // alert();
@@ -142,7 +128,7 @@
                         }
                     },
 
-                    success: function(data) {
+                    success: function (data) {
                         // console.log(data);
                         localStorage.setItem("clientKey", data.clientKey);
                         // console.log(localStorage.getItem("clientKey"));
@@ -151,7 +137,7 @@
                         logout();
                         window.location.href = "./userLogin.html";
                     },
-                    error: function(e) {
+                    error: function (e) {
                         alert(e.responseText);
                         console.log(
                             e.responseText,
@@ -165,7 +151,7 @@
                     // }
 
                     dataType: "json",
-                    contentType: "application/json"
+                    contentType: "application/json",
                 });
             }
             // $(document).on("click", "ul li", function() {
@@ -181,7 +167,7 @@
             // });
             function logout() {
                 localStorage.setItem("x-tempAdmin-token", null);
-                localStorage.setItem("reset_userId", null);
+                localStorage.setItem("adminDetails", null);
 
                 alert("logged out");
                 window.location.href = "/";

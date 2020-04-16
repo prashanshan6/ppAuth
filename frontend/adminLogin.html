@@ -6,7 +6,7 @@
         <title>Admin Login</title>
         <link rel="stylesheet" href="./style.css" />
     </head>
-    <body style="background-color: #21204a;overflow: hidden">
+    <body style="background-color: #21204a; overflow: hidden;">
         <!-- link -->
 
         <!-- <link rel="stylesheet" href="./bootstrap/bootstrap.min.css" /> -->
@@ -23,7 +23,7 @@
         <div class="header"></div>
         <!-- univ nav bar header -->
         <script>
-            $(function() {
+            $(function () {
                 $(".header").load("./universalNav.html");
             });
         </script>
@@ -65,7 +65,7 @@
 
                 var payload = {
                     email: email,
-                    password: password
+                    password: password,
                 };
 
                 var dataJson = JSON.stringify(payload);
@@ -75,7 +75,7 @@
                     url: "http://localhost:3000/api/admin/login",
                     data: dataJson,
 
-                    success: function(data) {
+                    success: function (data) {
                         // console.log(data);
                         localStorage.setItem(
                             "adminDetails",
@@ -84,7 +84,7 @@
                         localStorage.setItem("x-admin-token", data.token);
                         window.location.href = "./dashboard.html";
                     },
-                    error: function(e) {
+                    error: function (e) {
                         alert(e.responseText);
                         console.log(
                             e.responseText,
@@ -98,7 +98,7 @@
                     // }
 
                     dataType: "json",
-                    contentType: "application/json"
+                    contentType: "application/json",
                 });
             }
         </script>

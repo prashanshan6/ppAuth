@@ -6,7 +6,7 @@
         <title>User Login</title>
         <link rel="stylesheet" href="./style.css" />
     </head>
-    <body style="background-color: #21204a;overflow: hidden">
+    <body style="background-color: #21204a; overflow: hidden;">
         <!-- link -->
         <link rel="stylesheet" href="./bootstrap/bootstrap.min.css" />
 
@@ -21,7 +21,7 @@
         <div class="header"></div>
         <!-- univ nav bar header -->
         <script>
-            $(function() {
+            $(function () {
                 $(".header").load("./universalNav.html");
             });
         </script>
@@ -38,7 +38,7 @@
                     aria-describedby="emailHelp"
                     placeholder="Enter email"
                 />
-                <small id="emailHelp" class="form-text "
+                <small id="emailHelp" class="form-text"
                     >We'll never share your email with anyone else.</small
                 >
             </div>
@@ -50,9 +50,9 @@
                     id="password"
                     placeholder="Password"
                 />
-                <small class="form-text "
+                <small class="form-text"
                     >Forget Password?
-                    <a href="./userForgetPassword">Click here</a></small
+                    <a href="./userForgetPassword.html">Click here</a></small
                 >
             </div>
 
@@ -68,7 +68,7 @@
 
                 var payload = {
                     email: email,
-                    password: localStorage.getItem("clientKey") + password
+                    password: localStorage.getItem("clientKey") + password,
                 };
 
                 var dataJson = JSON.stringify(payload);
@@ -78,7 +78,7 @@
                     url: "http://localhost:3000/api/user/login",
                     data: dataJson,
 
-                    success: function(data) {
+                    success: function (data) {
                         // console.log(data.error);
                         // alert();
                         localStorage.setItem(
@@ -93,7 +93,7 @@
                             window.location.href = "./userDashboard.html";
                         else alert(data.error);
                     },
-                    error: function(e) {
+                    error: function (e) {
                         alert(e.responseText);
                         console.log(
                             e.responseText,
@@ -107,7 +107,7 @@
                     // }
 
                     dataType: "json",
-                    contentType: "application/json"
+                    contentType: "application/json",
                 });
             }
         </script>

@@ -16,7 +16,7 @@ router.post("/register", async (req, res) => {
     try {
         // console.log(11111);
         let result = await userModel.findOne({
-            $or: [{ email: req.body.email }, { regno: req.body.regno }]
+            $or: [{ email: req.body.email }, { regno: req.body.regno }],
         });
         if (result)
             return res
@@ -24,7 +24,7 @@ router.post("/register", async (req, res) => {
                 .send({ error: "register number/email already registered" });
 
         result = await adminModel.findOne({
-            organisation: req.body.organisation
+            organisation: req.body.organisation,
         });
         if (!result)
             return res.status(500).json({ error: "Organisation not found" });
@@ -70,7 +70,7 @@ router.post("/login", async (req, res) => {
         return res.header("x-user-token", token).send(temp);
     } else {
         return res.status(400).json({
-            error: "you dont have permission or password didn't match"
+            error: "you dont have permission or password didn't match",
         });
     }
 });
@@ -93,4 +93,27 @@ router.post("/login", async (req, res) => {
 //         return res.status(401).send("error, reset request not sent");
 //     }
 // });
+
+router.get("/forget/:email", async (req, res) => {
+    const email = req.params.email;
+    console.log(email);
+    try {
+        let result = await userModel.findOne({ email: email });
+        if (result.status == 0 || result.status == 1) {
+            return res.json({
+                status: "password reset request is already under review",
+            });
+        }
+        result.status = 1;
+        console.log(result);
+
+        if (result) result = await result.save();
+        else return res.status(403).json({ error: "email not registered" });
+        return res.json({ status: "password reset request has been sent" });
+    } catch (error) {
+        console.log(error);
+        return res.status(403).json({ error: "reqeust not sent" });
+    }
+});
+
 module.exports = router;

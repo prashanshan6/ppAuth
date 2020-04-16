@@ -1,10 +1,19 @@
+body {
+    background-color: #cc5577;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 100 60'%3E%3Cg %3E%3Crect fill='%23cc5577' width='11' height='11'/%3E%3Crect fill='%23cd567a' x='10' width='11' height='11'/%3E%3Crect fill='%23cd587d' y='10' width='11' height='11'/%3E%3Crect fill='%23ce5a80' x='20' width='11' height='11'/%3E%3Crect fill='%23ce5b83' x='10' y='10' width='11' height='11'/%3E%3Crect fill='%23cf5d85' y='20' width='11' height='11'/%3E%3Crect fill='%23cf5e88' x='30' width='11' height='11'/%3E%3Crect fill='%23d0608b' x='20' y='10' width='11' height='11'/%3E%3Crect fill='%23d0618e' x='10' y='20' width='11' height='11'/%3E%3Crect fill='%23d16391' y='30' width='11' height='11'/%3E%3Crect fill='%23d16594' x='40' width='11' height='11'/%3E%3Crect fill='%23d16696' x='30' y='10' width='11' height='11'/%3E%3Crect fill='%23d16899' x='20' y='20' width='11' height='11'/%3E%3Crect fill='%23d26a9c' x='10' y='30' width='11' height='11'/%3E%3Crect fill='%23d26b9f' y='40' width='11' height='11'/%3E%3Crect fill='%23d26da1' x='50' width='11' height='11'/%3E%3Crect fill='%23d26fa4' x='40' y='10' width='11' height='11'/%3E%3Crect fill='%23d271a7' x='30' y='20' width='11' height='11'/%3E%3Crect fill='%23d272a9' x='20' y='30' width='11' height='11'/%3E%3Crect fill='%23d274ac' x='10' y='40' width='11' height='11'/%3E%3Crect fill='%23d276af' y='50' width='11' height='11'/%3E%3Crect fill='%23d278b1' x='60' width='11' height='11'/%3E%3Crect fill='%23d27ab4' x='50' y='10' width='11' height='11'/%3E%3Crect fill='%23d27bb6' x='40' y='20' width='11' height='11'/%3E%3Crect fill='%23d17db9' x='30' y='30' width='11' height='11'/%3E%3Crect fill='%23d17fbb' x='20' y='40' width='11' height='11'/%3E%3Crect fill='%23d181be' x='10' y='50' width='11' height='11'/%3E%3Crect fill='%23d183c0' x='70' width='11' height='11'/%3E%3Crect fill='%23d084c3' x='60' y='10' width='11' height='11'/%3E%3Crect fill='%23d086c5' x='50' y='20' width='11' height='11'/%3E%3Crect fill='%23d088c8' x='40' y='30' width='11' height='11'/%3E%3Crect fill='%23cf8aca' x='30' y='40' width='11' height='11'/%3E%3Crect fill='%23cf8ccc' x='20' y='50' width='11' height='11'/%3E%3Crect fill='%23ce8dcf' x='80' width='11' height='11'/%3E%3Crect fill='%23ce8fd1' x='70' y='10' width='11' height='11'/%3E%3Crect fill='%23cd91d3' x='60' y='20' width='11' height='11'/%3E%3Crect fill='%23cd93d5' x='50' y='30' width='11' height='11'/%3E%3Crect fill='%23cc95d7' x='40' y='40' width='11' height='11'/%3E%3Crect fill='%23cc96da' x='30' y='50' width='11' height='11'/%3E%3Crect fill='%23cb98dc' x='90' width='11' height='11'/%3E%3Crect fill='%23cb9ade' x='80' y='10' width='11' height='11'/%3E%3Crect fill='%23ca9ce0' x='70' y='20' width='11' height='11'/%3E%3Crect fill='%23ca9ee2' x='60' y='30' width='11' height='11'/%3E%3Crect fill='%23c9a0e4' x='50' y='40' width='11' height='11'/%3E%3Crect fill='%23c8a1e6' x='40' y='50' width='11' height='11'/%3E%3Crect fill='%23c8a3e8' x='90' y='10' width='11' height='11'/%3E%3Crect fill='%23c7a5ea' x='80' y='20' width='11' height='11'/%3E%3Crect fill='%23c7a7eb' x='70' y='30' width='11' height='11'/%3E%3Crect fill='%23c6a9ed' x='60' y='40' width='11' height='11'/%3E%3Crect fill='%23c5aaef' x='50' y='50' width='11' height='11'/%3E%3Crect fill='%23c5acf1' x='90' y='20' width='11' height='11'/%3E%3Crect fill='%23c4aef2' x='80' y='30' width='11' height='11'/%3E%3Crect fill='%23c3b0f4' x='70' y='40' width='11' height='11'/%3E%3Crect fill='%23c3b1f6' x='60' y='50' width='11' height='11'/%3E%3Crect fill='%23c2b3f7' x='90' y='30' width='11' height='11'/%3E%3Crect fill='%23c1b5f9' x='80' y='40' width='11' height='11'/%3E%3Crect fill='%23c1b7fb' x='70' y='50' width='11' height='11'/%3E%3Crect fill='%23c0b9fc' x='90' y='40' width='11' height='11'/%3E%3Crect fill='%23c0bafe' x='80' y='50' width='11' height='11'/%3E%3Crect fill='%23bfbcff' x='90' y='50' width='11' height='11'/%3E%3C/g%3E%3C/svg%3E");
+    background-attachment: fixed;
+    background-size: cover;
+}
 .clickContent {
     position: relative;
-    top: 100px;
-    border: 1px solid gray;
+    top: 65px;
+    color: #faf3f3;
+    background-color: #88817d98;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 5px;
     margin: 0 auto;
     padding: 5%;
-    width: 80%;
+    width: 75%;
 }
 
 .navbar {
