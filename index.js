@@ -38,7 +38,7 @@ app.listen(port, () => {
 });
 
 mongoose
-    .connect("mongodb://localhost:27017/ppauth", {
+    .connect(process.env.DB_STRING , {
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useCreateIndex: true,
